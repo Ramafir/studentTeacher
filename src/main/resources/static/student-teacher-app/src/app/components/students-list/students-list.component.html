@@ -9,8 +9,8 @@
             </div>
           </div>
           <form class="form-inline my-2 my-lg-0">
-            <input type="search" (ngModelChange)="searchStudents(key.value)" #key="ngModel" ngModel="key"
-                   id="searchName" class="form-control mr-sm-2" placeholder="Search students..." required>
+            <input type="search" (ngModelChange)="searchStudents(key.value)" #key="ngModel" ngModel name="key"
+                   id="searchName" class="form-control mr-sm-2" placeholder="Search teachers..." required>
           </form>
         </div>
       </div>
@@ -30,7 +30,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let student of students">
+              <tr *ngFor="let student of sortedStudents">
                 <th scope="row">{{student.id}}</th>
                 <td>{{student.firstName}}</td>
                 <td>{{student.lastName}}</td>
@@ -43,8 +43,8 @@
                     </a>
                   </button>
                   <button class="btn btn-sm btn-warning" title="Show teachers">
-                    <a routerLink="" class="text-white">
-                      <i class="fas fa-wrench"></i>
+                    <a routerLink="/students/{{student.id}}" class="text-white">
+                      <i class="fas fa-list"></i>
                     </a>
                   </button>
                   <button class="btn btn-sm btn-danger" title="Delete">
@@ -61,6 +61,11 @@
         <div class="row">
           <a class="btn btn-primary mb-3" (click)="onOpenModal(null, 'add')">Add Student</a>
         </div>
+  <mat-paginator [length]="100"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 aria-label="Select page">
+  </mat-paginator>
       </div>
 
 
@@ -82,7 +87,7 @@
           </div>
           <div class="form-group">
             <label for="lastname">Last Name</label>
-            <input type="text" ngModel name="lastName" class="form-control" id="lastname" placeholder="Last name" required>
+            <input type="text" ngModel name="lastName"  class="form-control" id="lastname" placeholder="Last name" required>
           </div>
           <div class="form-group">
             <label for="email">E-Mail</label>
@@ -95,10 +100,10 @@
           <div class="form-group">
             <label>Field of study</label>
             <select name="fieldOfStudy" ngModel="IT" class="form-control" required>
-              <option value="IT">JAVA</option>
-              <option value="LAW">LAW</option>
-              <option value="MEDICINE">RUBY</option>
-            </select>
+            <option value="IT">IT</option>
+            <option value="LAW">LAW</option>
+            <option value="MEDICINE">MEDICINE</option>
+          </select>
           </div>
           <div class="modal-footer">
             <button type="button" id="add-student-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,7 +116,7 @@
 </div>
 
 <!--Edit Student Modal-->
-<div class="modal fade" id="updateDiseaseModal" tabindex="-1" role="dialog" aria-labelledby="diseaseEditModalLabel" aria-hidden="true">
+<div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="studentEditModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -124,20 +129,28 @@
         <form #editForm="ngForm">
           <div class="form-group">
             <label for="editedFirstName">First Name</label>
-            <input type="text" ngModel="{{editStudent?.firstName}}" name="name" class="form-control" id="editedFirstName" aria-describedby="emailHelp" placeholder="First name">
+            <input type="text" ngModel="{{editStudent?.firstName}}" name="firstName" class="form-control" id="editedFirstName" aria-describedby="emailHelp" placeholder="First name">
           </div>
           <input type="hidden" ngModel="{{editStudent?.id}}" name="id" class="form-control" id="id" placeholder="Email">
           <div class="form-group">
             <label for="editedLastName">Last Name</label>
-            <input type="text" ngModel="{{editStudent?.lastName}}" name="name" class="form-control" id="editedLastName" aria-describedby="emailHelp" placeholder="Last name">
+            <input type="text" ngModel="{{editStudent?.lastName}}" name="lastName" class="form-control" id="editedLastName" aria-describedby="emailHelp" placeholder="Last name">
           </div>
           <div class="form-group">
             <label for="editedLastName">E-Mail</label>
-            <input type="email" ngModel="{{editStudent?.email}}" name="name" class="form-control" id="editedEmail" aria-describedby="emailHelp" placeholder="E-Mail">
+            <input type="email" ngModel="{{editStudent?.email}}" name="email" class="form-control" id="editedEmail" aria-describedby="emailHelp" placeholder="E-Mail">
           </div>
           <div class="form-group">
-            <label for="editedInfected">Age</label>
-            <input type="number" ngModel="{{editStudent?.age}}" name="initialNumberOfInfected" class="form-control" id="editedInfected" placeholder="Age">
+            <label for="editedAge">Age</label>
+            <input type="number" ngModel="{{editStudent?.age}}" name="age" class="form-control" id="editedAge" placeholder="Age">
+          </div>
+          <div class="form-group">
+            <label>Field of study</label>
+            <select name="fieldOfStudy" ngModel="{{editStudent?.fieldOfStudy}}" class="form-control" required>
+              <option value="IT">IT</option>
+              <option value="LAW">LAW</option>
+              <option value="MEDICINE">MEDICINE</option>
+            </select>
           </div>
           <div class="modal-footer">
             <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
@@ -150,11 +163,11 @@
 </div>
 
 <!-- Delete Student Modal -->
-<div class="modal fade" id="deleteDiseaseModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+<div class="modal fade" id="deleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModelLabel">Delete Disease</h5>
+        <h5 class="modal-title" id="deleteModelLabel">Delete Student</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

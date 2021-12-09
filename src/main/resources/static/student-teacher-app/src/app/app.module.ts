@@ -12,11 +12,16 @@ import { TeacherListComponent } from './components/teacher-list/teacher-list.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { StudentDetailsComponent } from './components/student-details/student-details.component';
+import { TeacherDetailsComponent } from './components/teacher-details/teacher-details.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/teachers', pathMatch: 'full'},
   {path: 'students', component: StudentsListComponent},
-  {path: 'teachers', component: TeacherListComponent}
+  {path: 'teachers', component: TeacherListComponent},
+  {path: 'students/:id', component: StudentDetailsComponent},
+  {path: 'teachers/:id', component: TeacherDetailsComponent}
 ];
 
 @NgModule({
@@ -24,6 +29,8 @@ const routes: Routes = [
     AppComponent,
     StudentsListComponent,
     TeacherListComponent,
+    StudentDetailsComponent,
+    TeacherDetailsComponent,
   ],
     imports: [
         BrowserModule,
@@ -32,6 +39,7 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         MatTableModule,
+        MatPaginatorModule,
         MatSortModule
     ],
   providers: [TeacherService, StudentService],

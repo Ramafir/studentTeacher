@@ -41,7 +41,7 @@ public class TeacherController {
         return teacherService.getTeacherStudents(id);
     }
 
-    @PostMapping("")
+    @PostMapping("/add")
     public ResponseEntity<Teacher> save(@RequestBody Teacher teacher) {
         if (teacher.getId() != null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saved object cannot have id set");

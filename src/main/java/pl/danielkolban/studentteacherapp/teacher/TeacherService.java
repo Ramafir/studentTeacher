@@ -29,26 +29,14 @@ public class TeacherService {
     }
 
     public Teacher save(Teacher teacher) {
-        Optional<Teacher> teacherByEmail = teacherRepository.selectExistsEmail(teacher.getEmail());
-        teacherByEmail.ifPresent(t -> {
-            throw new DuplicateEmailException();
-        });
         return teacherRepository.save(teacher);
     }
 
     public Teacher update(Teacher teacher) {
-        Optional<Teacher> userByEmail = teacherRepository.selectExistsEmail(teacher.getEmail());
-        userByEmail.ifPresent(t -> {
-            if(!t.getId().equals(teacher.getId()))
-                throw new DuplicateEmailException();
-        });
         return teacherRepository.save(teacher);
     }
 
     public void deleteTeacher(Long teacherId) {
-        if(!teacherRepository.existsById(teacherId)) {
-            throw new TeacherNotFoundException();
-        }
         teacherRepository.deleteById(teacherId);
     }
 

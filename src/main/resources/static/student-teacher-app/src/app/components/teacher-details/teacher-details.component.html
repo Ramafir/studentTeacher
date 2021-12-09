@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="mx-auto">
+      <h2>Wyposażenie pracownika</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center">
+        <p>First Name: {{currentTeacher.firstName}}</p>
+        <p>Last Name: {{currentTeacher.lastName}}</p>
+        <p>Email: {{currentTeacher.email}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Field of study</th>
+          <th scope="col" class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{student.firstName}}</td>
+          <td>{{student.lastName}}</td>
+          <td>{{student.email}}</td>
+          <td>{{student.fieldOfStudy}}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-warning text-white" title="Zwróć"
+                    ng-if="!assignment.end" ng-click="ctrl.finishAssignment(assignment)">
+              <i class="fas fa-undo-alt"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="students.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">NO STUDENTS!</h4>
+          <p>No students were found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

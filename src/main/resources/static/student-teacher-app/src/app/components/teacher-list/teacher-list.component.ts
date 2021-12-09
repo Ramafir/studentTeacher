@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Teacher} from "../../interface/teacher";
 import {TeacherService} from "../../service/teacher.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import {Sort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-teacher-list',
@@ -12,9 +14,11 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class TeacherListComponent implements OnInit {
 
+
   public teachers: Teacher[] = [];
   public editTeacher: Teacher;
   public deleteTeacher: Teacher;
+  sortedTeachers: Teacher[];
 
   key: string = 'id';
   reverse: boolean = false;
@@ -25,6 +29,33 @@ export class TeacherListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeachers()
+  }
+
+  sortTeachers(sort: Sort) {
+    const data = this.teachers.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedTeachers = data;
+      return;
+    }
+    this.sortedTeachers = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'id':
+          return compare(a.id, b.id, isAsc)
+        case 'firstName':
+          return compare(a.firstName, b.firstName, isAsc);
+        case 'lastName':
+          return compare(a.lastName, b.lastName, isAsc);
+        case 'age':
+          return compare(a.age, b.age, isAsc);
+        case 'email':
+          return compare(a.email, b.email, isAsc);
+        case 'fieldOfStudy':
+          return compare(a.subject, b.subject, isAsc);
+        default:
+          return 0;
+      }
+    });
   }
 
   public getTeachers(): void {
@@ -79,13 +110,13 @@ export class TeacherListComponent implements OnInit {
   public searchTeachers(key: string): void {
     console.log(key);
     const results: Teacher[] = [];
-    for (const teacher of this.teachers) {
+    for (const teacher of this.sortedTeachers) {
       if (teacher.firstName.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         teacher.lastName.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(teacher);
       }
     }
-    this.teachers = results;
+    this.sortedTeachers = results;
     if (results.length === 0 || !key) {
       this.getTeachers();
     }
@@ -112,9 +143,8 @@ export class TeacherListComponent implements OnInit {
     button.click();
   }
 
+}
 
-  public sort(key) {
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

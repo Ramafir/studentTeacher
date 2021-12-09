@@ -1,6 +1,7 @@
 package pl.danielkolban.studentteacherapp.teacher;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 import pl.danielkolban.studentteacherapp.student.Student;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class Teacher {
     @NotBlank
     @Size(min = 2, max = 50)
     private String lastName;
-    @Size(min = 18, max = 100)
+    @Range(min = 18, max = 100)
     private Integer age;
     @Column(nullable = false, unique = true)
     private String email;

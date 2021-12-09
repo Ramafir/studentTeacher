@@ -13,7 +13,7 @@ import {Sort} from "@angular/material/sort";
 })
 export class StudentsListComponent implements OnInit {
 
-  public students: Student[] = [];
+  public students: Student[];
   public editStudent: Student;
   public deleteStudent: Student;
   sortedStudents: Student[];
@@ -25,7 +25,7 @@ export class StudentsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sortedStudents = this.students.slice()
+    this.getStudents();
   }
 
   sortStudents(sort: Sort) {
@@ -108,13 +108,13 @@ export class StudentsListComponent implements OnInit {
   public searchStudents(key: string): void {
     console.log(key);
     const results: Student[] = [];
-    for (const student of this.students) {
+    for (const student of this.sortedStudents) {
       if (student.firstName.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
         student.lastName.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(student);
       }
     }
-    this.students = results;
+    this.sortedStudents = results;
     if (results.length === 0 || !key) {
       this.getStudents();
     }

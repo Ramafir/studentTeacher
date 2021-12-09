@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Teacher} from "../interface/teacher";
+import {Student} from "../interface/student";
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,17 @@ export class TeacherService {
   constructor(private http: HttpClient) {
   }
 
+  public getTeacherStudents(teacherId: number): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.apiServerUrl}/students/${teacherId}/students`)
+  }
+
   public getTeachers(): Observable<Teacher[]> {
     return this.http.get<Teacher[]>(`${this.apiServerUrl}/teachers`)
 
   }
 
   public addTeacher(teacher: Teacher): Observable<Teacher> {
-    return this.http.post<Teacher>(`${this.apiServerUrl}/teachers`, teacher)
+    return this.http.post<Teacher>(`${this.apiServerUrl}/teachers/add`, teacher)
 
   }
 
