@@ -7,9 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import pl.danielkolban.studentteacherapp.student.FieldOfStudy;
+import pl.danielkolban.studentteacherapp.student.Student;
+import pl.danielkolban.studentteacherapp.student.StudentRepository;
+import pl.danielkolban.studentteacherapp.teacher.Teacher;
 import pl.danielkolban.studentteacherapp.teacher.TeacherRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
+import static pl.danielkolban.studentteacherapp.teacher.Subject.*;
 
 @SpringBootApplication
 public class StudentTeacherAppApplication {
@@ -18,15 +25,18 @@ public class StudentTeacherAppApplication {
         SpringApplication.run(StudentTeacherAppApplication.class, args);
     }
 
-    /*@Bean
-    CommandLineRunner run(TeacherRepository teacherRepository) {
+    @Bean
+    CommandLineRunner run(TeacherRepository teacherRepository, StudentRepository studentRepository) {
         return args -> {
-            serverRepo.save(new Server(null, "192.168.1.160", "Ubuntu Linux", "16 GB", "Personal PC", "http://localhost:8080/server/image/server1.png", SERVER_UP));
-            serverRepo.save(new Server(null, "192.168.1.58", "Fedora Linux", "16 GB", "Dell Tower","http://localhost:8080/server/image/server2.png", SERVER_DOWN));
-            serverRepo.save(new Server(null, "192.168.1.21", "MS 2008", "32 GB", "Web Server", "http://localhost:8080/server/image/server3.png", SERVER_UP));
-            serverRepo.save(new Server(null, "192.168.1.14", "Red Hat Enterprise Linux", "64 GB", "Mail Server", "http://localhost:8080/server/image/server4.png", SERVER_DOWN));
+            teacherRepository.save(new Teacher(null, "Paweł", "Gąbka", 43, "gąbek@edu.pl", JAVA, new ArrayList<>()));
+            teacherRepository.save(new Teacher(null, "Mariusz", "Pudzianowski", 47, "pudzian@wp.pl", PYTHON, new ArrayList<>()));
+            teacherRepository.save(new Teacher(null, "Grzegorz", "Skwara", 36, "skwarek@o2.pl", PYTHON, new ArrayList<>()));
+            teacherRepository.save(new Teacher(null, "Paulo", "Sousa", 50, "yyyyyyyyyy@top.pt", JAVASCRIPT, new ArrayList<>()));
+            studentRepository.save(new Student(null, "Tymoteusz", "Puchacz", 23, "puszka2115@sbm.pl", FieldOfStudy.LAW, new ArrayList<>()));
+            studentRepository.save(new Student(null, "Matty", "Cash", 24, "cashyy@avfc.com", FieldOfStudy.MEDICINE, new ArrayList<>()));
+            studentRepository.save(new Student(null, "Jakub", "Moder", 22, "modziu2115@sbm.pl", FieldOfStudy.IT, new ArrayList<>()));
         };
-    }*/
+    }
 
     @Bean
     public CorsFilter corsFilter() {

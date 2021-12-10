@@ -37,4 +37,5 @@ public class Teacher {
     @JoinColumn(name = "student_id")
     private List<Student> students = new ArrayList<>();
 
+
 }

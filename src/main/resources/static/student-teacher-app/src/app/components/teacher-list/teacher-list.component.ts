@@ -3,9 +3,9 @@ import {Teacher} from "../../interface/teacher";
 import {TeacherService} from "../../service/teacher.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
 import {Sort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
+import {StudentService} from "../../service/student.service";
+import {Student} from "../../interface/student";
 
 @Component({
   selector: 'app-teacher-list',
@@ -14,7 +14,7 @@ import {MatPaginator} from "@angular/material/paginator";
 })
 export class TeacherListComponent implements OnInit {
 
-
+  public students: Student[] = [];
   public teachers: Teacher[] = [];
   public editTeacher: Teacher;
   public deleteTeacher: Teacher;
@@ -24,11 +24,13 @@ export class TeacherListComponent implements OnInit {
   reverse: boolean = false;
 
 
-  constructor(private teacherService: TeacherService, private route: ActivatedRoute) {
+  constructor(private teacherService: TeacherService,
+              private studentService: StudentService) {
   }
 
   ngOnInit(): void {
     this.getTeachers()
+    this.getStudents()
   }
 
   sortTeachers(sort: Sort) {
@@ -56,6 +58,17 @@ export class TeacherListComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  public getStudents(): void {
+    this.studentService.getStudents().subscribe(
+      (response: Student[]) => {
+        this.students = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert((error.message))
+      }
+    );
   }
 
   public getTeachers(): void {

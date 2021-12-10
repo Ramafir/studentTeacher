@@ -1,4 +1,5 @@
 import {Subject} from "../enum/subject.enum";
+import {Student} from "./student";
 
 export interface Teacher {
   id: number;
@@ -7,4 +8,5 @@ export interface Teacher {
   age: number;
   email: string;
   subject: Subject;
+  students: Student[];
 }

@@ -40,7 +40,7 @@ export class TeacherService {
   }
 
   public getTeacher(theTeacherId: number): Observable<Teacher> {
-    const teacherUrl = `${this.apiServerUrl}/${theTeacherId}`;
+    const teacherUrl = `${this.apiServerUrl}/teachers/${theTeacherId}`;
     return this.http.get<Teacher>(teacherUrl);
   }
 }

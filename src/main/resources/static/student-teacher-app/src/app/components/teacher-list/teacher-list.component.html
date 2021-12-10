@@ -108,6 +108,14 @@
                     <option value="JAVASCRIPT">JAVASCRIPT</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <label for="students">Select your students:</label>
+                  <select ngModel name="students" class="form-control" id="students" multiple>
+                    <option *ngFor="let student of students"
+                            [value]="student.id"
+                            [selected]="student.id">{{student.lastName}}</option>
+                  </select>
+                </div>
                 <div class="modal-footer">
                   <button type="button" id="add-teacher-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
@@ -154,6 +162,14 @@
                     <option value="PYTHON">PYTHON</option>
                     <option value="RUBY">RUBY</option>
                     <option value="JAVASCRIPT">JAVASCRIPT</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="students">Select your students:</label>
+                  <select name="students" ngModel="{{editTeacher?.students}}" class="form-control" id="editedStudents" multiple>
+                    <option *ngFor="let student of students"
+                            [value]="student.id"
+                            [selected]="student.id">{{student.lastName}}</option>
                   </select>
                 </div>
                 <div class="modal-footer">

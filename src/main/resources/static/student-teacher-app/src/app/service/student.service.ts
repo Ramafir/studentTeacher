@@ -40,7 +40,7 @@ export class StudentService {
   }
 
   public getStudent(theStudentId: number): Observable<Student> {
-    const studentUrl = `${this.apiServerUrl}/${theStudentId}`;
+    const studentUrl = `${this.apiServerUrl}/students/${theStudentId}`;
     return this.http.get<Student>(studentUrl);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Student} from "../../interface/student";
-import {HttpErrorResponse} from "@angular/common/http";
 import {StudentService} from "../../service/student.service";
-import {Teacher} from "../../interface/teacher";
+import {TeacherService} from "../../service/teacher.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-student-details',
@@ -10,24 +10,26 @@ import {Teacher} from "../../interface/teacher";
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
-  public teachers: Teacher[];
-  public currentStudent: Student;
+  student: Student;
 
-  constructor(private studentService: StudentService) { }
+  constructor(private teacherService: TeacherService,
+              private studentService: StudentService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getStudentTeachers(this.currentStudent.id)
+    this.route.paramMap.subscribe(() => {
+      this.handleStudentDetails();
+    })
   }
 
-  public getStudentTeachers(studentId: number): void {
-    this.studentService.getStudentTeachers(studentId).subscribe(
-      (response: Teacher[]) => {
-        this.teachers = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert((error.message))
+  handleStudentDetails() {
+    const theStudentId: number = +this.route.snapshot.paramMap.get('id');
+
+    this.studentService.getStudent(theStudentId).subscribe(
+      data => {
+        this.student = data;
       }
-    );
+    )
   }
 
 }
