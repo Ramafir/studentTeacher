@@ -32,9 +32,7 @@ public class Teacher {
     @Column(nullable = false, unique = true)
     private String email;
     private Subject subject;
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @ManyToMany
     private List<Student> students = new ArrayList<>();
 
 

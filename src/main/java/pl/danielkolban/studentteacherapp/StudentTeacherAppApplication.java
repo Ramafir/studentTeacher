@@ -25,7 +25,7 @@ public class StudentTeacherAppApplication {
         SpringApplication.run(StudentTeacherAppApplication.class, args);
     }
 
-    @Bean
+   /* @Bean
     CommandLineRunner run(TeacherRepository teacherRepository, StudentRepository studentRepository) {
         return args -> {
             teacherRepository.save(new Teacher(null, "Paweł", "Gąbka", 43, "gąbek@edu.pl", JAVA, new ArrayList<>()));
@@ -36,7 +36,7 @@ public class StudentTeacherAppApplication {
             studentRepository.save(new Student(null, "Matty", "Cash", 24, "cashyy@avfc.com", FieldOfStudy.MEDICINE, new ArrayList<>()));
             studentRepository.save(new Student(null, "Jakub", "Moder", 22, "modziu2115@sbm.pl", FieldOfStudy.IT, new ArrayList<>()));
         };
-    }
+    }*/
 
     @Bean
     public CorsFilter corsFilter() {
