@@ -112,8 +112,8 @@
                   <label for="students">Select your students:</label>
                   <select ngModel name="students" class="form-control" id="students" multiple>
                     <option *ngFor="let student of students"
-                            [value]="student.id"
-                            [selected]="student.id">{{student.lastName}}</option>
+                            [value]="student"
+                            [selected]="student">{{student.lastName}}</option>
                   </select>
                 </div>
                 <div class="modal-footer">
@@ -168,8 +168,8 @@
                   <label for="students">Select your students:</label>
                   <select name="students" ngModel="{{editTeacher?.students}}" class="form-control" id="editedStudents" multiple>
                     <option *ngFor="let student of students"
-                            [value]="student.id"
-                            [selected]="student.id">{{student.lastName}}</option>
+                            [value]="student"
+                            [selected]="student">{{student.lastName}}</option>
                   </select>
                 </div>
                 <div class="modal-footer">

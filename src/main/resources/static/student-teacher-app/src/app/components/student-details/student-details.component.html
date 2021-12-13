@@ -30,12 +30,6 @@
           <td>{{teacher?.lastName}}</td>
           <td>{{teacher?.email}}</td>
           <td>{{teacher?.subject}}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-warning text-white" title="Zwróć"
-                    ng-if="!assignment.end" ng-click="ctrl.finishAssignment(assignment)">
-              <i class="fas fa-undo-alt"></i>
-            </button>
-          </td>
         </tr>
         </tbody>
       </table>

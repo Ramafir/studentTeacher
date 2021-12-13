@@ -41,7 +41,7 @@ public class TeacherController {
         return teacherService.getTeacherStudents(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add")
     public ResponseEntity<Teacher> save(@RequestBody Teacher teacher) {
         if (teacher.getId() != null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saved object cannot have id set");
@@ -54,7 +54,7 @@ public class TeacherController {
         return ResponseEntity.created(location).body(savedTeacher);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Teacher> update(@PathVariable Long id, @RequestBody Teacher teacher) {
         if (!id.equals(teacher.getId()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The updated object must have an id that matches the id in the resource path");

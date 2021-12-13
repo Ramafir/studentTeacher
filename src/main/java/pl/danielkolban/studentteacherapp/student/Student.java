@@ -1,5 +1,6 @@
 package pl.danielkolban.studentteacherapp.student;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 import pl.danielkolban.studentteacherapp.teacher.Teacher;
@@ -33,6 +34,7 @@ public class Student {
     private String email;
     private FieldOfStudy fieldOfStudy;
     @ManyToMany(mappedBy = "students")
+    @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
     private List<Teacher> teachers = new ArrayList<>();
 
 }
